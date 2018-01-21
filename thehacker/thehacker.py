@@ -1,6 +1,7 @@
 from os import listdir
 from os.path import join
 from collections import Counter
+import sys
 
 text_dir = './text'
 
@@ -8,39 +9,39 @@ frequencies = [
 ' ',
 'e',
 't',
-'a',
 'o',
+'a',
 'i',
-'n',
 'h',
+'n',
 's',
-'r',
 'd',
+'r',
 'l',
-'y',
 'u',
-'m',
+'y',
 'w',
-'c',
+'m',
 'g',
 '.',
-'b',
+'c',
 'f',
-'p',
+'b',
 ',',
+'p',
 'k',
+'"',
 '\'',
 'v',
-'"',
 '-',
-'j',
 '?',
 'x',
+'j',
+'1',
 'q',
+'2',
 'z',
 '!',
-'z',
-'2',
 '0',
 '3',
 '5',
@@ -53,11 +54,13 @@ frequencies = [
 '7',
 ]
 
+
 files = [join(text_dir, f) for f in listdir(text_dir)];
 
 
 text = ''
-with open('./text/TheHacker0.txt', 'r') as f: text = f.read()
+filename = './text/TheHacker0.txt' if len(sys.argv) == 1 else sys.argv[1] 
+with open(filename, 'r') as f: text = f.read()
 
 crypto_freqs = map(lambda x: x[0], Counter(text).most_common())
 
