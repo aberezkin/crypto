@@ -12,27 +12,27 @@ frequencies = [
 'a',
 'o',
 'i',
-'n',
 'h',
+'n',
 's',
-'l',
 'd',
 'r',
-'y',
+'l',
 'u',
+'y',
 'w',
 'g',
-'.',
 'm',
 'c',
-'k',
-'f',
 'b',
-'p',
 '"',
+'.',
+'f',
 '\'',
-'-',
+'p',
+'k',
 'v',
+'-',
 ',',
 '1',
 'q',
@@ -48,6 +48,13 @@ frequencies = [
 '4',
 '9',
 '[',
+'A',
+'C',
+'H',
+'T',
+'#',
+'&',
+';',
 ']',
 '8',
 '6',
@@ -65,11 +72,11 @@ with open(filename, 'r') as f: text = f.read()
 
 crypto_freqs = map(lambda x: x[0], Counter(text).most_common())
 
-decr_text = ''
-for c in text:
-  ind = crypto_freqs.index(c)
-  decr_text += frequencies[ind]
+# decr_text = ''
+# for c in text:
+#   ind = crypto_freqs.index(c)
+#   decr_text += frequencies[ind]
 
-print decr_text
+print crypto_freqs
 
 
