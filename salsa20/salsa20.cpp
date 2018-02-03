@@ -146,43 +146,24 @@ void pretty_print(uc* output, int len) {
   }
 }
 
-int main() {
-  uc key[KEY_SIZE] = {0};
-  uc iv[IV_SIZE] = {0};
-  uc byte_key[FULL_KEY_SIZE];
+uc* output;
 
-  for (int i = 0; i < KEY_SIZE; i++) byte_key[i] = key[i];
-  for (int i = 0; i < IV_SIZE; i++) byte_key[KEY_SIZE + i - 1] = iv[i];
+extern "C" {
+  char* salsa20_encrypt(char* in, int size, char* key, char* iv) {
+    uc byte_key[FULL_KEY_SIZE];
 
-  setk(byte_key);
-  setiv(&byte_key[IV_OFFSET]);
+    for (int i = 0; i < KEY_SIZE; i++) byte_key[i] = key[i];
+    for (int i = 0; i < IV_SIZE; i++) byte_key[KEY_SIZE + i - 1] = iv[i];
 
-  // TEST STREAM GENERATION
-  // uc stream[BLOCK_SIZE];
-  // get_stream(stream);
+    setk(byte_key);
+    setiv(&byte_key[IV_OFFSET]);
 
-  // for (size_t i = 0; i < BLOCK_SIZE; i++) {
-  //   std::cout << std::hex << (ui) stream[i];
-  // }
+    output = new uc[size];
 
-  // TEST ENCRYPTION
-  const size_t len = 512;
-  uc input[len];
-  for (int i = 0; i < len; i++) input[i] = 0;
+    encrypt((uc*)in, output, size);
 
-  uc output[len];
+    reset();
 
-  encrypt(input, output, len);
-
-  pretty_print(output, len);
-
-  reset();
-
-  // Decrypt
-  encrypt(output, output, len);
-
-  pretty_print(output, len);
-
-  std::cout << std::endl;
-  return 0;
+    return (char*)output;
+  }
 }
